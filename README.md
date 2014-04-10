@@ -1,4 +1,4 @@
 billing-system
 ==============
 
-TDD with Brad Wilson port on Java
+TekPub session - TDD with Brad Wilson port on Java
