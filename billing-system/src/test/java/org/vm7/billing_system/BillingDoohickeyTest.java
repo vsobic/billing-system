@@ -3,9 +3,7 @@
  */
 package org.vm7.billing_system;
 
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 import java.util.List;
 
@@ -42,9 +40,13 @@ public class BillingDoohickeyTest {
 	public void customerWithSubscriptionThatIsExpiredGetsCharged() {
 		// Source of customers
 		// Payment gateway or service for charging customers
-		CustomerRepository customerRepository = Mockito.mock(CustomerRepository.class);
-		CreditCardCharger charger = Mockito.mock(CreditCardCharger.class);
+		
 		Customer customer = new Customer(true); // What does it mean to not have subscription
+		
+		CustomerRepository customerRepository = Mockito.mock(CustomerRepository.class);
+		when(customerRepository.getCustomerById(1)).thenReturn(customer);
+		CreditCardCharger charger = Mockito.mock(CreditCardCharger.class);
+		
 		BillingDoohickey thing = new BillingDoohickey(customerRepository, charger);
 		
 		thing.processMonth(2011,8);
@@ -86,7 +88,7 @@ public class BillingDoohickeyTest {
 		public void processMonth(int year, int month) {
 			// TODO: implement me!
 			
-			Customer customer = customerRepository.getCustomers().get(1);
+			Customer customer = customerRepository.getCustomerById(1);
 			charger.chargeCustomer(customer);
 			//throw new UnsupportedOperationException("Not yet implemented");
 		}
